@@ -5,8 +5,9 @@ set -o errexit
 # Create a 'public' directory to hold the final site files
 mkdir -p public
 
-# Copy HTML and CSS files directly to the public directory
+# Copy HTML, CSS, AND the images folder to the public directory
 cp index.html admin.html style.css public/
+cp -r images public/ # <-- THIS IS THE NEW LINE YOU NEED TO ADD
 
 # --- Process JavaScript files ---
 # Read the environment variables and replace the placeholders in the JS files.
