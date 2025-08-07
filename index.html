@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dwarkadhish Ayurveda - Divine Rituals. Purely Sourced.</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-off-white text-deep-charcoal">
+
+    <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-40 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="font-serif text-2xl font-bold">Dwarkadhish Ayurveda</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#our-story" class="nav-link">Our Story</a>
+                <a href="#reviews" class="nav-link">Reviews</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="cart-icon" class="relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center transform scale-0 transition-transform">0</span>
+                </button>
+                <button id="mobile-menu-button" class="md:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95">
+            <a href="#products" class="block py-2 px-6 text-center nav-link">Products</a>
+            <a href="#our-story" class="block py-2 px-6 text-center nav-link">Our Story</a>
+            <a href="#reviews" class="block py-2 px-6 text-center nav-link">Reviews</a>
+            <a href="#contact" class="block py-2 px-6 text-center nav-link">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="relative h-[85vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1598202054044-a9a3d5822147?q=80&w=2070&auto=format&fit=crop');">
+            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="relative h-full flex flex-col justify-center items-center text-white text-center px-4">
+                <h1 class="font-serif text-5xl md:text-7xl font-bold">Divine Rituals. Purely Sourced.</h1>
+                <p class="mt-4 max-w-2xl text-lg">Harnessing ancient wisdom from a sacred land, delivered with modern transparency and luxury.</p>
+                <a href="#products" class="mt-8 bg-warm-taupe text-white font-bold py-3 px-8 rounded-full hover:bg-deep-charcoal transition-colors">Shop Now</a>
+            </div>
+        </section>
+
+        <section id="products" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <h2 class="font-serif text-4xl font-bold text-center mb-12">Our Collection</h2>
+                <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <p class="text-center col-span-full">Loading Products...</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="our-story" class="bg-sage-green py-16 md:py-24">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-serif text-4xl font-bold text-center mb-12">Our Story</h2>
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center text-left">
+                    <div class="md:col-span-1 flex flex-col items-center">
+                        <img src="images/founder_img.jpeg" alt="Founder of Dwarkadhish Ayurveda" class="w-48 h-48 object-cover rounded-full shadow-lg">
+                        <p class="mt-4 font-bold text-lg font-serif">Dr. Tanmay Yeole </p>
+                        <p class="font-semibold text-warm-taupe">B.A.M.S. Ayurveda</p>
+                    </div>
+                    <div class="md:col-span-2">
+                        <h3 class="font-serif text-3xl font-bold mb-4 text-balance">A Journey Back to Authenticity</h3>
+                        <p class="text-balance mb-4">
+                           "During my years of practice, I saw a disconnect. Patients were seeking natural wellness, but the market offered a confusing choice: either clinically pure but soulless products, or beautifully packaged luxury that lacked true Ayurvedic authenticity. I knew there had to be a better way to bring genuine, time-tested rituals to people who were looking for them."
+                        </p>
+                        <p class="text-balance">
+                            "Dwarkadhish Ayurveda was born from a desire to bridge this gap. Inspired by the sacred purity of the Dwarka region , our mission is to deliver formulations that are not only effective but a complete sensorial experience. It’s about feeling the rich & authentic formulations. We call this 'Transparent Luxury' —our promise to you: pure, potent, and honest skincare from a land steeped in divine wellness." 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="reviews" class="py-16 md:py-24">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-serif text-4xl font-bold text-center mb-12">What Our Customers Say</h2>
+                <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    </div>
+                <button id="see-more-reviews-btn" class="mt-12 border border-warm-taupe text-warm-taupe font-bold py-3 px-8 rounded-full hover:bg-warm-taupe hover:text-white transition-colors">See More Reviews</button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact" class="bg-deep-charcoal text-white">
+        </footer>
+
+    <div id="modal-container"></div>
+    
+    <script src="main.js" type="module"></script>
+</body>
+</html>

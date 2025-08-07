@@ -1,0 +1,73 @@
+/* Using Tailwind's base styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Original "Transparent Luxury" Theme */
+:root {
+    --sage-green: #C9D3CA;
+    --warm-taupe: #A39384;
+    --deep-charcoal: #161313;
+    --muted-terracotta: #DEBDA6;
+    --subtle-gold: #BFAE99;
+    --off-white: #FBFBFB;
+}
+
+/* Applying custom fonts */
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: var(--off-white);
+    color: var(--deep-charcoal);
+}
+
+.font-serif {
+    font-family: 'Cormorant Garamond', serif;
+}
+
+/* Applying custom colors for utility classes */
+.bg-off-white { background-color: var(--off-white); }
+.bg-deep-charcoal { background-color: var(--deep-charcoal); }
+.bg-warm-taupe { background-color: var(--warm-taupe); }
+.bg-muted-terracotta { background-color: var(--muted-terracotta); }
+.text-warm-taupe { color: var(--warm-taupe); }
+.text-deep-charcoal { color: var(--deep-charcoal); }
+
+/* Smooth scrolling for anchor links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- NEW HERO BACKGROUND PATTERN --- */
+.hero-bg {
+    background-color: #A39384; /* Fallback color */
+    background-image: 
+        radial-gradient(circle at 100% 100%, transparent 20px, #C9D3CA 20px, #C9D3CA 22px, transparent 22px),
+        radial-gradient(circle at 0 0, transparent 20px, #C9D3CA 20px, #C9D3CA 22px, transparent 22px);
+    background-size: 44px 44px;
+    background-position: 0 0, 22px 22px;
+}
+
+
+/* Custom styles for cart quantity buttons */
+.quantity-btn {
+    border: 1px solid var(--sage-green);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.quantity-btn:hover {
+    background-color: #f0f0f0;
+}
+
+/* Utility for balancing text in headlines */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
