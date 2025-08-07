@@ -2,17 +2,12 @@
 # exit on error
 set -o errexit
 
-# Create a 'public' directory to hold the final site files
+
 mkdir -p public
 
-# Copy HTML, CSS, AND the images folder to the public directory
-cp index.html admin.html style.css public/
-cp -r images public/ # <-- THIS IS THE NEW LINE YOU NEED TO ADD
 
-# --- Process JavaScript files ---
-# Read the environment variables and replace the placeholders in the JS files.
-# The 'sed' command finds and replaces the placeholder text.
-# The final, populated JS files are saved into the 'public' directory.
+cp index.html admin.html style.css public/
+cp -r images public/ 
 
 # Process main.js
 sed -e "s|__FIREBASE_API_KEY__|$FIREBASE_API_KEY|g" \
