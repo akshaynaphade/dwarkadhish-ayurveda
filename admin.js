@@ -36,7 +36,7 @@ const formTitle = document.getElementById('form-title');
 const productIdInput = document.getElementById('product-id');
 const productNameInput = document.getElementById('product-name');
 const productPriceInput = document.getElementById('product-price');
-const productImageInput = document.getElementById('product-image');
+const productImageInput = document.getElementById('product-images');
 const cancelEditBtn = document.getElementById('cancel-edit-btn');
 const deleteConfirmModal = document.getElementById('delete-confirm-modal');
 const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
@@ -78,7 +78,7 @@ async function handleProductFormSubmit(e) {
     const productData = {
         name: productNameInput.value,
         price: parseFloat(productPriceInput.value),
-        image: productImageInput.value
+        images: productImageInput.value.split(',').map(url => url.trim())
     };
     const id = productIdInput.value;
 
@@ -108,7 +108,7 @@ async function handleAdminListClick(e) {
             productIdInput.value = docSnap.id;
             productNameInput.value = product.name;
             productPriceInput.value = product.price;
-            productImageInput.value = product.image || '';
+            productImageInput.value = product.images ? product.images.join(', ') : '';
             formTitle.textContent = 'Edit Product';
             cancelEditBtn.classList.remove('hidden');
             window.scrollTo(0, 0);

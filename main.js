@@ -57,26 +57,53 @@ const footerTemplate = () => `
 
 function renderProducts(products) {
     if (!productListContainer) return;
-    productListContainer.innerHTML = products.map(product => `
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden group">
-            <div class="relative">
-                <img src="${product.image}" alt="${product.name}" class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/161313?text=Image+Not+Found';">
-                <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <button class="add-to-bag-btn bg-white text-deep-charcoal font-bold py-3 px-8 rounded-full transition-colors duration-300"
-                        data-product-id="${product.id}"
-                        data-product-name="${product.name}"
-                        data-product-price="${product.price}"
-                        data-product-image="${product.image}">
-                        Add to Bag
+    if (products.length === 0) {
+        productListContainer.innerHTML = `<p class="text-center col-span-full text-gray-500">No products have been added yet.</p>`;
+        return;
+    }
+    productListContainer.innerHTML = products.map(product => {
+        // Use the first image as the default, or a placeholder if no images exist
+        const defaultImage = product.images && product.images.length > 0
+            ? product.images[0]
+            : 'https://placehold.co/400x400/cccccc/161313?text=Image+Not+Found';
+
+        return `
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden group text-center">
+            <div class="relative w-full h-80 product-carousel" data-product-id="${product.id}">
+                ${product.images && product.images.length > 0
+                    ? product.images.map((imgUrl, index) => `
+                        <img src="${imgUrl}" alt="${product.name} image ${index + 1}" class="w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-300 ease-in-out ${index === 0 ? 'opacity-100 z-10' : 'opacity-0'}" data-index="${index}">
+                      `).join('')
+                    : `<img src="${defaultImage}" alt="${product.name}" class="w-full h-full object-cover">`
+                }
+
+                ${product.images && product.images.length > 1 ? `
+                    <button class="carousel-btn absolute top-1/2 left-2 transform -translate-y-1/2 bg-white/50 p-2 rounded-full shadow-md z-20 opacity-0 group-hover:opacity-100 transition-opacity" data-direction="-1">
+                        &#10094;
                     </button>
+                    <button class="carousel-btn absolute top-1/2 right-2 transform -translate-y-1/2 bg-white/50 p-2 rounded-full shadow-md z-20 opacity-0 group-hover:opacity-100 transition-opacity" data-direction="1">
+                        &#10095;
+                    </button>
+                ` : ''}
+
+                <button class="add-to-bag-btn absolute bottom-4 right-4 bg-white text-deep-charcoal font-bold py-2 px-4 rounded-full transition-all duration-300 z-20 shadow-lg hover:scale-105"
+                    data-product-id="${product.id}"
+                    data-product-name="${product.name}"
+                    data-product-price="${product.price}"
+                    data-product-image="${defaultImage}">
+                    Add to Bag
+                </button>
+                 <div class="absolute bottom-4 left-4 bg-white/80 text-deep-charcoal font-bold py-2 px-4 rounded-full z-20">
+                    ₹ ${product.price.toLocaleString('en-IN')}
                 </div>
             </div>
-            <div class="p-6 text-center">
-                <h3 class="font-serif text-2xl font-semibold">${product.name}</h3>
-                <p class="text-lg font-bold text-deep-charcoal mt-2">₹ ${product.price.toLocaleString('en-IN')}</p>
+
+            <div class="p-4">
+                <h3 class="font-serif text-xl font-semibold">${product.name}</h3>
             </div>
         </div>
-    `).join('');
+        `
+    }).join('');
 }
 
 function renderReviews() {
@@ -216,6 +243,52 @@ function placeOrder() {
 }
 
 // --- Event Listeners ---
+
+// --- Carousel Logic ---
+function handleCarousel(carousel, direction) {
+    const images = carousel.querySelectorAll('img');
+    let currentIndex = -1;
+    images.forEach((img, index) => {
+        if (img.classList.contains('opacity-100')) {
+            currentIndex = index;
+        }
+    });
+
+    const newIndex = (currentIndex + direction + images.length) % images.length;
+
+    images[currentIndex].classList.remove('opacity-100', 'z-10');
+    images[currentIndex].classList.add('opacity-0');
+
+    images[newIndex].classList.remove('opacity-0');
+    images[newIndex].classList.add('opacity-100', 'z-10');
+}
+
+// --- Add to Bag Button Click Effect ---
+function handleAddToCartClick(button) {
+    // 1. Add product to cart
+    const productData = {
+        id: button.dataset.productId,
+        name: button.dataset.productName,
+        price: parseFloat(button.dataset.productPrice),
+        image: button.dataset.productImage,
+    };
+    addToCart(productData);
+
+    // 2. Change button appearance
+    button.classList.add('bg-green-500', 'text-white');
+    button.textContent = 'Added ✓';
+    button.disabled = true;
+
+    // 3. Revert button after 2 seconds
+    setTimeout(() => {
+        button.classList.remove('bg-green-500', 'text-white');
+        button.textContent = 'Add to Bag';
+        button.disabled = false;
+    }, 2000);
+}
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     footerContainer.innerHTML = footerTemplate();
     renderReviews();
@@ -233,16 +306,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cartIcon.addEventListener('click', openCart);
 
+    // Updated Event Listener for Products
     productListContainer.addEventListener('click', (e) => {
-        if (e.target.closest('.add-to-bag-btn')) {
-            const button = e.target.closest('.add-to-bag-btn');
-            const productData = {
-                id: button.dataset.productId,
-                name: button.dataset.productName,
-                price: parseInt(button.dataset.productPrice),
-                image: button.dataset.productImage,
-            };
-            addToCart(productData);
+        const carouselBtn = e.target.closest('.carousel-btn');
+        const addToBagBtn = e.target.closest('.add-to-bag-btn');
+
+        if (carouselBtn) {
+            const direction = parseInt(carouselBtn.dataset.direction, 10);
+            const carousel = carouselBtn.closest('.product-carousel');
+            handleCarousel(carousel, direction);
+        }
+
+        if (addToBagBtn) {
+            handleAddToCartClick(addToBagBtn);
         }
     });
 });
